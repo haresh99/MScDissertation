@@ -11,7 +11,7 @@ voting_classifier_pred = []
 threshold = .5
 
 # Save necessary files in tables list
-for filename in ['file1', 'file2 ']:
+for filename in files:
     if "." in filename:
         if filename.split('.')[1] == 'csv':
             tables.append(pd.read_csv(filename))
@@ -43,6 +43,7 @@ for idx, r in enumerate(results):
         voting_classifier_pred.append(1)
 
 final_table = tables[0].iloc[:, 0:2]
-final_table['VotingClassifier_prediction'] = voting_classifier_pred
+#final_table['VotingClassifier_prediction'] = voting_classifier_pred
+final_table['Ensemble_prediction'] = voting_classifier_pred
 
 final_table.to_csv('voting_classifier.csv', index=False)
