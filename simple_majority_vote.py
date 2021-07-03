@@ -3,7 +3,7 @@ import pandas as pd
 from os import listdir
 
 # Establish variables
-files = listdir("./")
+files = listdir("./dev_files/")
 tables = []
 predictions = []
 probs = []
@@ -28,6 +28,7 @@ results = np.transpose(np.stack(tuple(predictions)))
 probs = np.transpose(np.stack(tuple(probs)))
 
 # Vote for ensemble prediction (hard voting and soft voting)
+print(results)
 for idx, r in enumerate(results):
     sum = r.sum()
 

@@ -4,10 +4,10 @@ import numpy as np
 import pandas as pd
 
 # Import files
-ABCpred = pd.read_csv('ABCpred_parsed.csv')
-LBtope = pd.read_csv('LBtope_parsed.csv')
-iBCE_EL = pd.read_csv('iBCE_EL_parsed.csv')
-Bepipred2 = pd.read_csv('Bepipred2_parsed.csv')
+ABCpred = pd.read_csv('./dev_files/ABCpred_parsed.csv')
+LBtope = pd.read_csv('./dev_files/LBtope_parsed.csv')
+iBCE_EL = pd.read_csv('./dev_files/iBCE_EL_parsed.csv')
+Bepipred2 = pd.read_csv('./dev_files/Bepipred2_parsed.csv')
 
 # Make a list of files
 tables = []

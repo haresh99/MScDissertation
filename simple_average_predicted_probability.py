@@ -3,7 +3,7 @@ import pandas as pd
 from os import listdir
 
 # Establish variables
-files = listdir("./")
+files = listdir("./org_spec_files/Bacteria/")
 tables = []
 predictions = []
 probs = []
@@ -27,21 +27,28 @@ for table_id in range(len(tables)):
 results = np.transpose(np.stack(tuple(predictions)))
 probs = np.transpose(np.stack(tuple(probs)))
 
-# Vote for ensemble prediction (hard voting and soft voting)
-for idx, p in enumerate(probs):
-    probs_sum = p.sum() # Adding all probabilities together
-    # Dividir cada probabilidad por probs_sum para tenerlo en una escala del 0-1
-    # Sumar las probabilidades
-    sum = p.sum()
-    # Si la suma < 0.5, class = -1; si la suma > 0.5, class = 1.
+# # Scale every row of the probs table
+# probs_tmp = pd.DataFrame(probs)
+# probs_tmp.loc[:, :] = probs_tmp.loc[:, :].div(probs_tmp.sum(axis=1), axis=0)
+# probs = probs_tmp.to_numpy()
 
-    if sum < threshold:
+# Vote for ensemble prediction (hard voting and soft voting)
+divisor = probs.shape[1]
+print(probs)
+for idx, p in enumerate(probs):
+    sum = p.sum()
+    print(sum)
+    print(divisor)
+    print(sum/divisor)
+    print("---")
+    # Si la suma < 0.5, class = -1; si la suma > 0.5, class = 1.
+    if sum/divisor < threshold:
         simple_av_pred_prob.append(-1)
     else:
         simple_av_pred_prob.append(1)
 
 final_table = tables[0].iloc[:, 0:2]
 #final_table['VotingClassifier_prediction'] = simple_av_pred_prob
-final_table['VC_Ensemble_prediction'] = simple_av_pred_prob
+final_table['simple_av_prob_prediction'] = simple_av_pred_prob
 
 final_table.to_csv('simple_av_pred_prob.csv', index=False)
