@@ -16,6 +16,7 @@ probs = []
 threshold = .5
 
 # Set weights (these will be calculated beforehand. (What metric to use? Accuracy? F1 Score?)
+# Set the weights in the respective order in which you will scale them [see line 23-26]
 weights = [0.75, 0.62, 0.67, 0.58]
 weights_sum = sum(weights)
 
@@ -27,6 +28,7 @@ Bepipred2_weight = weights[3]/weights_sum  # e.g. 0.58
 raw_models = {'ABCpred': [ABCpred, ABCpred_weight], 'LBtope': [LBtope, LBtope_weight],
               'iBCE-EL': [iBCE_EL, iBCE_EL_weight], 'Bepipred2': [Bepipred2, Bepipred2_weight]}
 
+# Multiply class values by scaled weights
 for table in raw_models.values():
     processed_table = table[0].sort_values(by=['Info_UID', 'Info_center_pos'])
     results.append(processed_table.iloc[:, -1].values * table[1])
